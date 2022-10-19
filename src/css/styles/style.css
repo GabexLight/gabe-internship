@@ -218,6 +218,10 @@ header .logo-2 {
   display: none;
 }
 
+.slick-prev:before, .slick-next:before {
+  color: black !important;
+}
+
 header .logo-scroll {
   display: none;
 }
@@ -807,6 +811,14 @@ header .header-col.mid .social-icons {
 #mainmenu ul.mega > li ul li {
   margin: 0;
   padding: 0;
+}
+
+.nft__wrapper {
+  width: 95% !important;
+}
+
+@media screen {
+  
 }
 
 #mainmenu ul.mega > li ul li:last-child {
@@ -12325,6 +12337,13 @@ a.read_more i {
 }
 
 /* close new table */
+
+.nft_coll_info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .table {
   display: table;
