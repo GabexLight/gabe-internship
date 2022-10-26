@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import Slider from "react-slick";
-import { Skeleton, Slide } from "@mui/material";
 import SkeletonLoad from "./skeletonLoad";
 
 
@@ -79,12 +78,12 @@ const HotCollections = () => {
                 <div className="nft__wrapper" key={index}>
                   <div className="nft_coll" key={nft.id}>
                         <div className="nft_wrap">
-                          <Link to="/item-details">
+                          <Link to={`/item-details2/${nft.nftId}`}>
                             <img src={nft.nftImage} className="lazy img-fluid" alt="" />
                           </Link>
                         </div>
                         <div className="nft_coll_pp">
-                          <Link to="/author">
+                          <Link to={`/authorId/${nft.authorId}`}>
                             <img className="lazy pp-coll" src={nft.authorImage} alt="" />
                           </Link>
                           <i className="fa fa-check"></i>

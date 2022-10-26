@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Skeleton, Slide } from "@mui/material";
+import { Skeleton } from "@mui/material";
 
 const SkeletonLoad = () => {
     return (

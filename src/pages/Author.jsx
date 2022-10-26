@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { Skeleton } from "@mui/material";
 
 const Author = () => {
+    
+  const [newItems, setNewItems] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  
+  useEffect(() => {
+    async function fetchData() {
+      window.scrollTo(0, 0);
+      const data = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
+      setNewItems(data.data)
+      setIsLoading(true)
+    }
+    fetchData()
+  }, [])
+
+  
+  
+  
+  const { authorId } = useParams()
+  const nft = newItems.find(nft => nft.authorId == authorId)
+  console.log(nft)
+
   return (
     <div id="wrapper">
+          {isLoading ? (
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
 
@@ -25,7 +48,7 @@ const Author = () => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
+                      <img src={nft.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
@@ -55,13 +78,61 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems nft={nft}/>
                 </div>
               </div>
             </div>
           </div>
         </section>
       </div>
+          ) : (
+            <div className="no-bottom no-top" id="content">
+          <Skeleton variant="rectangle" height={360}/>
+        <section aria-label="section">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="d_profile de-flex">
+                  <div className="de-flex-col">
+                    <div className="profile_avatar">
+                      <div className="profile_name">
+                      <Skeleton variant="circular"width={140} height={140}/>
+                        <h4>
+                          <Skeleton />
+                          <span className="profile_username"><Skeleton width={120}/></span>
+                          <span id="wallet" className="profile_wallet">
+                            <Skeleton width={230}/>
+                          </span>
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="profile_follow de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_follower"><Skeleton width={100}/></div>
+                      <Skeleton height={60} width={120}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="skelton__wrap">
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+          )}
     </div>
   );
 };

@@ -218,6 +218,10 @@ header .logo-2 {
   display: none;
 }
 
+.slick-slide {
+  
+}
+
 .slick-prev:before, .slick-next:before {
   color: black !important;
 }
@@ -12772,6 +12776,34 @@ a.read_more i {
 .de-switch input[type="checkbox"]:checked + label:after {
   left: 23px;
 }
+
+.de__coutdown > .no__display {
+  display: none !important;
+  border: none !important;
+}
+
+.nft__changes {
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between;
+}
+
+.nft__item--changes {
+width: 298px;
+margin: 5px;
+}
+
+.margin__bottom {
+  margin: 5px;
+}
+
+.skelton__wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 
 .de-switch label {
   transition: all 200ms ease-in-out;
