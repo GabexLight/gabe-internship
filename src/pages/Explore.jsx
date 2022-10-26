@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import SubHeader from "../images/subheader.jpg";
 import ExploreItems from "../components/explore/ExploreItems";
 
+//  https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections
+
 const Explore = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Does this work?
   }, []);
 
   return (

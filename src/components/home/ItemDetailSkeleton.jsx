@@ -1,77 +1,47 @@
-import React, { useEffect, useState } from "react";
-import EthImage from "../images/ethereum.svg";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import ItemDetailSkeleton from "../components/home/ItemDetailSkeleton";
+import { Skeleton } from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ItemDetails = () => {
-  
-  const [newItems, setNewItems] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  
-  useEffect(() => {
-    async function fetchData() {
-      window.scrollTo(0, 0);
-      const data = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
-      setNewItems(data.data)
-      setIsLoading(true)
-    }
-    fetchData()
-  }, [])
-
-  
-  
-  
-  const { nftId } = useParams()
-  const nft = newItems.find(nft => nft.nftId == nftId)
-  console.log(nft)
-
-  return (
-      <div id="wrapper" >
-    {isLoading ? (
+const ItemDetailSkeleton = () => {
+    return (
         <div className="no-bottom no-top" id="content">
           <div id="top"></div>
           <section aria-label="section" className="mt90 sm-mt-0">
             <div className="container">
               <div className="row">
                 <div className="col-md-6 text-center">
-                  <img
-                    src={nft.nftImage}
-                    className="img-fluid img-rounded mb-sm-30 nft-image"
-                    alt=""
-                  />
+                  <Skeleton variant='rectangle' height={550}/>
                 </div>
                 <div className="col-md-6">
                   <div className="item_info">
-                    <h2>{nft.title}</h2>
+                    <h2><Skeleton width={240}/></h2>
   
                     <div className="item_info_counts">
                       <div className="item_info_views">
                         <i className="fa fa-eye"></i>
-                        100
+                        <Skeleton />
                       </div>
                       <div className="item_info_like">
                         <i className="fa fa-heart"></i>
-                        {nft.likes}
+                        <Skeleton />
                       </div>
                     </div>
                     <p>
-                      doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                      illo inventore veritatis et quasi architecto beatae vitae
-                      dicta sunt explicabo.
+                    <Skeleton />
+                    <Skeleton width={500}/>
                     </p>
                     <div className="d-flex flex-row">
                       <div className="mr40">
-                        <h6>Owner</h6>
+                        <h6><Skeleton width={90}/></h6>
                         <div className="item_author">
                           <div className="author_list_pp">
-                            <Link to={`/authorId/${nft.authorId}`}>
-                              <img className="lazy" src={nft.authorImage} alt="" />
+                            <Link to="/author">
+                            <Skeleton variant='circular' height={40}/>
                               <i className="fa fa-check"></i>
                             </Link>
                           </div>
                           <div className="author_list_info">
-                            <Link to={`/authorId/${nft.authorId}`}>Monica Lucas</Link>
+                            <Link to="/author"><Skeleton width={90}/></Link>
                           </div>
                         </div>
                       </div>
@@ -79,24 +49,23 @@ const ItemDetails = () => {
                     </div>
                     <div className="de_tab tab_simple">
                       <div className="de_tab_content">
-                        <h6>Creator</h6>
+                        <h6><Skeleton width={90}/></h6>
                         <div className="item_author">
                           <div className="author_list_pp">
-                            <Link to={`/authorId/${nft.authorId}`}>
-                              <img className="lazy" src={nft.authorImage} alt="" />
+                            <Link to="/author">
+                            <Skeleton variant='circular' height={40} />
                               <i className="fa fa-check"></i>
                             </Link>
                           </div>
                           <div className="author_list_info">
-                            <Link to={`/authorId/${nft.authorId}`}>Monica Lucas</Link>
+                            <Link to="/author"><Skeleton width={90} /></Link>
                           </div>
                         </div>
                       </div>
                       <div className="spacer-40"></div>
-                      <h6>Price</h6>
+                      <h6><Skeleton width={90}/></h6>
                       <div className="nft-item-price">
-                        <img src={EthImage} alt="" />
-                        <span>{nft.price}</span>
+                        <Skeleton width={100}/>
                       </div>
                     </div>
                   </div>
@@ -105,12 +74,7 @@ const ItemDetails = () => {
             </div>
           </section>
         </div>
-    ) : (
-      <ItemDetailSkeleton />
-      )}
-      </div>
-      
-  );
-};
+    );
+}
 
-export default ItemDetails;
+export default ItemDetailSkeleton;
