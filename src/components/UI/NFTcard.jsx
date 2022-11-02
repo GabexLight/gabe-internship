@@ -1,23 +1,29 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { Skeleton } from "@mui/material";
+import { Link } from 'react-router-dom';
+import Clock from './clock';
 
-const NewItemsSkelton = () => {
+const NFTcard = ({ item }) => {
     return (
-        <div className="nft__item nft__wrapper" >
+        <div className="nft__wrapper" key={item.id}>
+        <div className="nft__item" >
           <div className="author_list_pp">
             <Link
-              to="/author"
+              to={`/authorId/${item.authorId}`}
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title="Creator: Monica Lucas"
             >
-              <Skeleton variant='circular' height={40} width={40}/>
+              <img className="lazy" src={item.authorImage} alt="" />
               <i className="fa fa-check"></i>
             </Link>
           </div>
-          <div className="de_countdown">5h 30m 32s</div>
+          {item.expiryDate ? (
+            <div className="de_countdown">< Clock item={item}/></div>
+          ) : (
+            <div></div>
+          )
 
+          }
           <div className="nft__item_wrap">
             <div className="nft__item_extra">
               <div className="nft__item_buttons">
@@ -33,7 +39,7 @@ const NewItemsSkelton = () => {
                   </a>
                   <a
                     href="https://twitter.com/intent/tweet?url=https://gigaland.io"
-                    target="_blank"
+                    target="_blank" 
                     rel="noreferrer"
                   >
                     <i className="fa fa-twitter fa-lg"></i>
@@ -45,21 +51,27 @@ const NewItemsSkelton = () => {
               </div>
             </div>
 
-            <Link to="/item-details">
-              <Skeleton variant='rectangle' height={260}/>
+            <Link to={`/item-details/${item.nftId}`}>
+              <img
+                src={item.nftImage}
+                className="lazy nft__item_preview"
+                alt=""
+              />
             </Link>
           </div>
           <div className="nft__item_info">
-            <Link to="/item-details">
-              <h4>{<Skeleton variant='rectangle' width={140} />}</h4>
+            <Link to={`/item-details/${item.nftId}`}>
+              <h4>{item.title}</h4>
             </Link>
-            <div className="nft__item_price">{<Skeleton variant='rectangle' width={110} />}</div>
+            <div className="nft__item_price">{item.price} ETH</div>
             <div className="nft__item_like">
               <i className="fa fa-heart"></i>
+              <span>{item.likes}</span>
             </div>
           </div>
+        </div>
       </div>
     );
 }
 
-export default NewItemsSkelton;
+export default NFTcard;

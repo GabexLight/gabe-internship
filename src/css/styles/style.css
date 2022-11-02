@@ -12799,6 +12799,14 @@ margin: 5px;
   margin: 5px;
 }
 
+.nft__skeleton--wrapper2 {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  margin: 0 !important;
+  
+
+}
+
 .top__skeleton {
   margin: 0 0 20px 5px;
 }
