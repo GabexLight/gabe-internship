@@ -6,134 +6,146 @@ import axios from "axios";
 import { Skeleton } from "@mui/material";
 
 const Author = () => {
-    
-  const [newItems, setNewItems] = useState([])
+
+  const [authorDetails, setauthorDetails] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [following, setFollowing] = useState("Follow")
+  const [follow, setFollow] = useState(0)
+  
+  let { authorId } = useParams()
   
   useEffect(() => {
     async function fetchData() {
       window.scrollTo(0, 0);
-      const data = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
-      setNewItems(data.data)
+      const data = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`)
+      setauthorDetails(data.data)
       setIsLoading(true)
     }
     fetchData()
   }, [])
-
+  
+ 
+  function updateFollwers() {
+    if (following === "Follow") {
+      setFollowing("Unfollow")
+      authorDetails.followers += 1
+    } if (following === "Unfollow") {
+      setFollowing("Follow")
+      authorDetails.followers += -1
+    }
+    
+  }
   
   
-  
-  const { authorId } = useParams()
-  const nft = newItems.find(nft => nft.authorId == authorId)
-  console.log(nft)
-
   return (
     <div id="wrapper">
-          {isLoading ? (
-      <div className="no-bottom no-top" id="content">
-        <div id="top"></div>
-
-        <section
-          id="profile_banner"
-          aria-label="section"
-          className="text-light"
-          data-bgimage="url(images/author_banner.jpg) top"
-          style={{ background: `url(${AuthorBanner}) top` }}
-        ></section>
-
-        <section aria-label="section">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="d_profile de-flex">
-                  <div className="de-flex-col">
-                    <div className="profile_avatar">
-                      <img src={nft.authorImage} alt="" />
-
-                      <i className="fa fa-check"></i>
-                      <div className="profile_name">
-                        <h4>
-                          Monica Lucas
-                          <span className="profile_username">@monicaaaa</span>
-                          <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="profile_follow de-flex">
-                    <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="de_tab tab_simple">
-                  <AuthorItems nft={nft}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-          ) : (
+      {isLoading ? (
             <div className="no-bottom no-top" id="content">
-          <Skeleton variant="rectangle" height={360}/>
-        <section aria-label="section">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="d_profile de-flex">
-                  <div className="de-flex-col">
-                    <div className="profile_avatar">
-                      <div className="profile_name">
-                      <Skeleton variant="circular"width={140} height={140}/>
-                        <h4>
-                          <Skeleton />
-                          <span className="profile_username"><Skeleton width={120}/></span>
-                          <span id="wallet" className="profile_wallet">
-                            <Skeleton width={230}/>
-                          </span>
-                        </h4>
+              <div id="top"></div>
+
+              <section
+                id="profile_banner"
+                aria-label="section"
+                className="text-light"
+                data-bgimage="url(images/author_banner.jpg) top"
+                style={{ background: `url(${AuthorBanner}) top` }}
+              ></section>
+
+              <section aria-label="section">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="d_profile de-flex">
+                        <div className="de-flex-col">
+                          <div className="profile_avatar">
+                            <img src={authorDetails.authorImage} alt="" />
+
+                            <i className="fa fa-check"></i>
+                            <div className="profile_name">
+                              <h4>
+                                {authorDetails.authorName}
+                                <span className="profile_username">@{authorDetails.tag}</span>
+                                <span id="wallet" className="profile_wallet">
+                                  {authorDetails.address}
+                                </span>
+                                <button id="btn_copy" title="Copy Text">
+                                  Copy
+                                </button>
+                              </h4>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="profile_follow de-flex">
+                          <div className="de-flex-col">
+                            <div className="profile_follower">{authorDetails.followers} followers</div>
+                            <Link to="#" onClick={updateFollwers} className="btn-main">
+                              {following}
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-md-12">
+                      <div className="de_tab tab_simple">
+
+                            <AuthorItems authorDetails={authorDetails} />
+
                       </div>
                     </div>
                   </div>
-                  <div className="profile_follow de-flex">
+                </div>
+              </section>
+            </div >
+      ) : (
+        <div className="no-bottom no-top" id="content">
+          <Skeleton variant="rectangle" height={360} />
+          <section aria-label="section">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="d_profile de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower"><Skeleton width={100}/></div>
-                      <Skeleton height={60} width={120}/>
+                      <div className="profile_avatar">
+                        <div className="profile_name">
+                          <Skeleton variant="circular" width={140} height={140} />
+                          <h4>
+                            <Skeleton />
+                            <span className="profile_username"><Skeleton width={120} /></span>
+                            <span id="wallet" className="profile_wallet">
+                              <Skeleton width={230} />
+                            </span>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower"><Skeleton width={100} /></div>
+                        <Skeleton height={60} width={120} />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="col-md-12">
-                <div className="skelton__wrap">
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
-                <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom"/>
+                <div className="col-md-12">
+                  <div className="skelton__wrap">
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                    <Skeleton variant="rectangle" height={470} width={300} className="margin__bottom" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-          )}
-    </div>
+          </section>
+        </div>
+      )}
+    </div >
   );
 };
 

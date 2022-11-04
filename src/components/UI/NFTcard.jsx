@@ -8,7 +8,7 @@ const NFTcard = ({ item }) => {
         <div className="nft__item" >
           <div className="author_list_pp">
             <Link
-              to={`/authorId/${item.authorId}`}
+              to={`/author/${item.authorId}`}
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title="Creator: Monica Lucas"

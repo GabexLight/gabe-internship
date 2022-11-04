@@ -48,7 +48,7 @@ const ExploreItems = () => {
   return (
     <>
       <div>
-        <select id="filter" defaultValue="" onChange={(event) => filterNFTs(event.target.value)}>
+        <select id="filter-items" defaultValue="" onChange={(event) => filterNFTs(event.target.value)}>
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
