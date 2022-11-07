@@ -8,24 +8,19 @@ const ItemDetails = () => {
   
   const [newItems, setNewItems] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  let { nftId } = useParams()
   
   useEffect(() => {
     async function fetchData() {
       window.scrollTo(0, 0);
-      const data = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
+      const data = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`)
       setNewItems(data.data)
       setIsLoading(true)
     }
     fetchData()
   }, [])
-
   
   
-  
-  const { nftId } = useParams()
-  const nft = newItems.find(nft => nft.nftId == nftId)
-  console.log(nft)
-
   return (
       <div id="wrapper" >
     {isLoading ? (
@@ -36,42 +31,40 @@ const ItemDetails = () => {
               <div className="row">
                 <div className="col-md-6 text-center">
                   <img
-                    src={nft.nftImage}
+                    src={newItems.nftImage}
                     className="img-fluid img-rounded mb-sm-30 nft-image"
                     alt=""
                   />
                 </div>
                 <div className="col-md-6">
                   <div className="item_info">
-                    <h2>{nft.title}</h2>
+                    <h2>{newItems.title}</h2>
   
                     <div className="item_info_counts">
                       <div className="item_info_views">
                         <i className="fa fa-eye"></i>
-                        100
+                        {newItems.views}
                       </div>
                       <div className="item_info_like">
                         <i className="fa fa-heart"></i>
-                        {nft.likes}
+                        {newItems.likes}
                       </div>
                     </div>
                     <p>
-                      doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                      illo inventore veritatis et quasi architecto beatae vitae
-                      dicta sunt explicabo.
+                      {newItems.description}
                     </p>
                     <div className="d-flex flex-row">
                       <div className="mr40">
                         <h6>Owner</h6>
                         <div className="item_author">
                           <div className="author_list_pp">
-                            <Link to={`/author/${nft.authorId}`}>
-                              <img className="lazy" src={nft.authorImage} alt="" />
+                            <Link to={`/author/${newItems.ownerId}`}>
+                              <img className="lazy" src={newItems.ownerImage} alt="" />
                               <i className="fa fa-check"></i>
                             </Link>
                           </div>
                           <div className="author_list_info">
-                            <Link to={`/author/${nft.authorId}`}>Monica Lucas</Link>
+                            <Link to={`/author/${newItems.ownerId}`}>{newItems.ownerName}</Link>
                           </div>
                         </div>
                       </div>
@@ -82,13 +75,13 @@ const ItemDetails = () => {
                         <h6>Creator</h6>
                         <div className="item_author">
                           <div className="author_list_pp">
-                            <Link to={`/author/${nft.authorId}`}>
-                              <img className="lazy" src={nft.authorImage} alt="" />
+                            <Link to={`/author/${newItems.creatorId}`}>
+                              <img className="lazy" src={newItems.creatorImage} alt="" />
                               <i className="fa fa-check"></i>
                             </Link>
                           </div>
                           <div className="author_list_info">
-                            <Link to={`/author/${nft.authorId}`}>Monica Lucas</Link>
+                            <Link to={`/author/${newItems.creatorId}`}>{newItems.creatorName}</Link>
                           </div>
                         </div>
                       </div>
@@ -96,7 +89,7 @@ const ItemDetails = () => {
                       <h6>Price</h6>
                       <div className="nft-item-price">
                         <img src={EthImage} alt="" />
-                        <span>{nft.price}</span>
+                        <span>{newItems.price}</span>
                       </div>
                     </div>
                   </div>

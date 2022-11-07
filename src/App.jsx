@@ -5,7 +5,6 @@ import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import ItemDetails2 from "./pages/itemDetails2";
 
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/author/:authorId" element={<Author />} />
         <Route path="/item-details/:nftId"  element={<ItemDetails />} />
-        <Route path="/item-details2/:nftId"  element={<ItemDetails2 />} />
       </Routes>
       <Footer />
     </Router>
